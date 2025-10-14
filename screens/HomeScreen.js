@@ -14,9 +14,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-export default function HomeScreen({ route }) {
+export default function HomeScreen({ route, navigation }) {
   const { nombre } = route.params || { nombre: 'Usuario' };
 
+  const handleLocation = () => {
+    
+    navigation.navigate('Tracking');
+  };
   // Categorías con iconos locales
   const categorias = [
     { nombre: 'Bebidas', icon: require('../assets/icons/bebidas.png'), color: '#fcebd9' },
@@ -96,6 +100,10 @@ export default function HomeScreen({ route }) {
         <TouchableOpacity style={styles.navItem}>
           <Ionicons name="home" size={24} color="#fff" />
           <Text style={styles.navText}>Inicio</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={handleLocation}>
+            <Ionicons name="locate-sharp" size={24} color="#fff" />
+            <Text style={styles.navText}>Ubicación</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
           <Ionicons name="cart" size={24} color="#fff" />
