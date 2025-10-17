@@ -1,0 +1,11 @@
+src/
+ ├── screens/
+ │   └── HomeScreen.js       ← Pantalla que orquesta todo
+ └── components/
+     └── home/
+         ├── Home.jsx        ← Componente principal (vista completa del Home)
+         ├── Header.jsx      ← Encabezado con saludo e íconos
+         ├── SearchBar.jsx   ← Barra de búsqueda
+         ├── CategoryList.jsx← Muestra las categorías (Bebidas, Carnes, etc.)
+         ├── ProductList.jsx ← Lista de productos recomendados
+         └── Navbar.jsx      ← Barra inferior de navegación
