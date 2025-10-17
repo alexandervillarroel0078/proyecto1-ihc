@@ -22,13 +22,7 @@ export default function Home({
         <CategoryList categorias={categorias} />
         <ProductList productos={productos} />
 
-        {/* 🔹 Botón para navegar a Pedidos */}
-        {/* <TouchableOpacity
-          style={styles.btnPedidos}
-          onPress={onPedidosPress} // ✅ llama a la función pasada desde HomeScreen
-        >
-          <Text style={styles.btnText}>🛒 Ver pedidos</Text>
-        </TouchableOpacity> */}
+ 
       </ScrollView>
     </View>
   );

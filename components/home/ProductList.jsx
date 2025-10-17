@@ -63,24 +63,24 @@ const styles = StyleSheet.create({
   sectionTitle: { color: "#1E6F73", fontWeight: "bold", fontSize: 17 },
   sectionLink: { color: "#f28c56", fontSize: 13, fontWeight: "600" },
   productCard: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
+    backgroundColor: "#ffffffff",
+    borderRadius: 10,
     paddingVertical: 10,
-    paddingHorizontal: 8,
     alignItems: "center",
     marginLeft: 10,
     width: 130,
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 3,
+    height: 220,
+    borderWidth: 1,
+    borderColor: "#E6E6E6",
+    shadowOpacity: 0.05,
   },
   productImg: {
-    width: 90,
-    height: 90,
-    borderRadius: 10,
+    width: 110,
+    height: 110,
+    resizeMode: "contain", // mantiene proporción sin deformar
+    marginBottom: 4,
   },
+
   productName: {
     fontWeight: "bold",
     marginTop: 6,
@@ -97,10 +97,16 @@ const styles = StyleSheet.create({
   addBtn: {
     backgroundColor: "#1E6F73",
     borderRadius: 6,
-    paddingVertical: 5,
-    paddingHorizontal: 20,
+    paddingVertical: 6,
+    width: "100%", // 🔹 ocupa todo el ancho del card
+    alignItems: "center",
   },
-  addText: { color: "#fff", fontSize: 13, fontWeight: "bold" },
+  addText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+  },
 
   badge: {
     position: "absolute",

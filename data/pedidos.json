@@ -5,28 +5,48 @@
     "fecha": "lun 6 de oct.",
     "hora": "12:17pm",
     "estado": "Entregado",
-    "productos": 50,
+    "productos": 3,
     "total": 99.99,
     "imagen": "mermelada.png"
   },
   {
     "id": 2,
     "numero": "Pedido #2",
-    "fecha": "lun 6 de oct.",
-    "hora": "12:17pm",
-    "estado": "Entregado",
-    "productos": 50,
-    "total": 99.99,
+    "fecha": "mar 7 de oct.",
+    "hora": "9:30am",
+    "estado": "Pendiente",
+    "productos": 5,
+    "total": 150.5,
     "imagen": "pollo.png"
   },
   {
     "id": 3,
     "numero": "Pedido #3",
-    "fecha": "lun 6 de oct.",
-    "hora": "12:17pm",
-    "estado": "Entregado",
-    "productos": 50,
-    "total": 99.99,
+    "fecha": "mié 8 de oct.",
+    "hora": "11:00am",
+    "estado": "En camino",
+    "productos": 2,
+    "total": 85.25,
     "imagen": "queso.png"
+  },
+  {
+    "id": 4,
+    "numero": "Pedido #4",
+    "fecha": "jue 9 de oct.",
+    "hora": "3:15pm",
+    "estado": "Preparando",
+    "productos": 4,
+    "total": 120.0,
+    "imagen": "pan.png"
+  },
+  {
+    "id": 5,
+    "numero": "Pedido #5",
+    "fecha": "vie 10 de oct.",
+    "hora": "6:00pm",
+    "estado": "Cancelado",
+    "productos": 1,
+    "total": 25.0,
+    "imagen": "ace.png"
   }
 ]
