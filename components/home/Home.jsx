@@ -21,8 +21,6 @@ export default function Home({
         <Banner />
         <CategoryList categorias={categorias} />
         <ProductList productos={productos} />
-
- 
       </ScrollView>
     </View>
   );
