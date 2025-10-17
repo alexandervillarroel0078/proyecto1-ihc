@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "numero": "Pedido #1",
+    "fecha": "lun 6 de oct.",
+    "hora": "12:17pm",
+    "estado": "Entregado",
+    "productos": 50,
+    "total": 99.99,
+    "imagen": "mermelada.png"
+  },
+  {
+    "id": 2,
+    "numero": "Pedido #2",
+    "fecha": "lun 6 de oct.",
+    "hora": "12:17pm",
+    "estado": "Entregado",
+    "productos": 50,
+    "total": 99.99,
+    "imagen": "pollo.png"
+  },
+  {
+    "id": 3,
+    "numero": "Pedido #3",
+    "fecha": "lun 6 de oct.",
+    "hora": "12:17pm",
+    "estado": "Entregado",
+    "productos": 50,
+    "total": 99.99,
+    "imagen": "queso.png"
+  }
+]
