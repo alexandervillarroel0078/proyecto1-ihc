@@ -15,7 +15,7 @@ export default function LoginScreen({ navigation }) {
 
     if (user) {
       login(user);
-      //navigation.navigate("Main", { screen: "Inicio" });
+      //navigation.navigate("Main", { screen: "Inicio" });// no necesario ya navega automaticamente al homesscreen....
     } else {
       Alert.alert('Error', 'Correo o contraseña incorrectos');
     }
@@ -56,9 +56,6 @@ export default function LoginScreen({ navigation }) {
     </View>
   );
 }
-
-// (usa tus mismos estilos anteriores)
-
 
 const styles = StyleSheet.create({
   container: {

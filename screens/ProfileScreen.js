@@ -6,7 +6,7 @@ export default function ProfileScreen({ navigation }) {
 
   const handleLogout = () => {
     logout();
-    //navigation.navigate("Login");
+    //navigation.navigate("Login"); // no necesario ya navega automaticamente al desloguear
   };
 
   if (!user) {
