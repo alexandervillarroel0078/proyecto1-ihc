@@ -1,0 +1,4 @@
+web
+npx expo start -c
+mobil
+npx expo start --tunnel

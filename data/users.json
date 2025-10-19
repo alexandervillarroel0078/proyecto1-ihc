@@ -5,5 +5,11 @@
     "correo": "cliente@gmail.com",
     "password": "5678",
     "nombre": "María"
+  },
+  {
+    "id": 2,
+    "correo": "pepe@gmail.com",
+    "password": "1234",
+    "nombre": "Pepe"
   }
 ]
