@@ -1,10 +1,11 @@
 // 📦 Importamos el componente principal "Home" que contiene toda la interfaz de la pantalla principal
 import Home from "../components/home/Home";
+import { useUser } from "../navigation/context/UserContext";
 
 // 🔹 Definimos la pantalla principal que se usa dentro del navegador de pestañas (AppNavigator)
 export default function HomeScreen({ route, navigation }) {
-  // 🧭 Extrae el parámetro "nombre" si viene desde otra pantalla; si no, usa "Usuario" por defecto
-  const { nombre } = route.params || { nombre: "Usuario" };
+  // obtener usuario desde el contexto general
+  const { user } = useUser();
 
   // 🗺️ Función para navegar hacia la pestaña de "Ubicación"
   const handleLocation = () => navigation.navigate("Ubicación");
@@ -33,7 +34,7 @@ export default function HomeScreen({ route, navigation }) {
   // 🧩 Render principal — pasamos todos los datos y funciones al componente <Home />
   return (
     <Home
-      nombre={nombre}                 // 👤 Muestra el saludo con el nombre del usuario
+      nombre={user?.nombre || "Usuario"}                 // 👤 Muestra el saludo con el nombre del usuario
       categorias={categorias}         // 🧃 Muestra la lista de categorías
       productos={productos}           // 🛍️ Muestra los productos recomendados
       onLocationPress={handleLocation} // 🗺️ Se ejecuta al pulsar algo que lleve a "Ubicación"

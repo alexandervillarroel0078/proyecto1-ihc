@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
 import { Text, View } from "react-native";
 
 import HomeScreen from "../screens/HomeScreen";
@@ -12,7 +11,7 @@ const Tab = createBottomTabNavigator();
 
 export default function AppNavigator() {
   return (
-    <NavigationContainer>
+    
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
@@ -94,6 +93,5 @@ export default function AppNavigator() {
         <Tab.Screen name="Pedidos" component={PedidosScreen} />
         <Tab.Screen name="Perfil" component={ProfileScreen} />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 }

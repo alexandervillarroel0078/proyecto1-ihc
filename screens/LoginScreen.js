@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import users from '../data/users.json'; // 👈 importa el JSON
+import { useUser } from '../navigation/context/UserContext';
 
 export default function LoginScreen({ navigation }) {
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useUser();
 
   const handleLogin = () => {
     const user = users.find(
@@ -12,7 +14,8 @@ export default function LoginScreen({ navigation }) {
     );
 
     if (user) {
-      navigation.navigate('Home', { nombre: user.nombre });
+      login(user);
+      //navigation.navigate("Main", { screen: "Inicio" });
     } else {
       Alert.alert('Error', 'Correo o contraseña incorrectos');
     }
