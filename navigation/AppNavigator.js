@@ -3,9 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, View } from "react-native";
 
 import HomeScreen from "../screens/HomeScreen";
-import PaymentScreen from "../screens/PaymentScreen";
 import PedidosScreen from "../screens/PedidosScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import TrackingScreen from "../screens/TrackingScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -89,7 +89,7 @@ export default function AppNavigator() {
         })}
       >
         <Tab.Screen name="Inicio" component={HomeScreen} />
-        <Tab.Screen name="Ubicación" component={PaymentScreen} />
+        <Tab.Screen name="Ubicación" component={TrackingScreen} />
         <Tab.Screen name="Pedidos" component={PedidosScreen} />
         <Tab.Screen name="Perfil" component={ProfileScreen} />
         
@@ -97,14 +97,3 @@ export default function AppNavigator() {
   );
 }
 
-{/*
-  <Tab.Screen name="Pago"component={PaymentScreen}
-          options={{ tabBarButton: () => null }}
-        />
-  
-  navigation.navigate("Pago", {
-  pedidoId: pedido.id ?? 123,
-  cliente: user?.nombre ?? "Invitado",
-  monto: pedido.total ?? 50.00,
-});
- */}

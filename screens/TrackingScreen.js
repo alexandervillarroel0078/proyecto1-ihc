@@ -1,92 +1,64 @@
-import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
+import Header from "../components/home/Header"; // ✅ reutilizado
 
 export default function TrackingScreen() {
-  const origin = { latitude: -17.7843, longitude: -63.1831 }; // 📍 punto fijo (ejemplo)
-  const [destination, setDestination] = useState(null);
-  const [routeCoords, setRouteCoords] = useState([]);
+  // 📍 Coordenadas fijas (simulación)
+  const origin = { latitude: -17.7833, longitude: -63.1821 }; // Plaza 24 de Septiembre
+  const destination = { latitude: -17.7868, longitude: -63.1765 }; // Mercado Los Pozitos
 
-  // Cargar destino guardado si existe
+  // 🛣️ Ruta simulada
+  const routeCoords = [
+    origin,
+    { latitude: -17.7842, longitude: -63.1815 },
+    { latitude: -17.7852, longitude: -63.1790 },
+    { latitude: -17.7860, longitude: -63.1775 },
+    destination,
+  ];
+
+  // 🕒 Estado dinámico
+  const [status, setStatus] = useState("En preparación...");
+  const [headerColor, setHeaderColor] = useState("#fff");
+
+  // 🕓 A los 10 seg cambia a “En camino”
   useEffect(() => {
-    const loadSavedDestination = async () => {
-      const saved = await AsyncStorage.getItem("lastDestination");
-      if (saved) {
-        const dest = JSON.parse(saved);
-        setDestination(dest);
-        getRoute(origin, dest);
-      }
-    };
-    loadSavedDestination();
+    const timer = setTimeout(() => {
+      setStatus("En camino 🚗");
+      setHeaderColor("#fff");
+    }, 10000);
+
+    return () => clearTimeout(timer);
   }, []);
-
-  // Función para obtener la ruta usando OSRM
-  const getRoute = async (origin, dest) => {
-    try {
-      const url = `https://router.project-osrm.org/route/v1/driving/${origin.longitude},${origin.latitude};${dest.longitude},${dest.latitude}?overview=full&geometries=geojson`;
-      const response = await fetch(url);
-      const data = await response.json();
-      if (data.routes && data.routes.length > 0) {
-        const coords = data.routes[0].geometry.coordinates.map(([lon, lat]) => ({
-          latitude: lat,
-          longitude: lon,
-        }));
-        setRouteCoords(coords);
-      } else {
-        Alert.alert("Error", "No se encontró una ruta disponible.");
-      }
-    } catch (error) {
-      Alert.alert("Error", "No se pudo calcular la ruta.");
-      console.error(error);
-    }
-  };
-
-  // Cuando el usuario toca el mapa
-  const handleMapPress = async (e) => {
-    const newDest = e.nativeEvent.coordinate;
-    setDestination(newDest);
-    await AsyncStorage.setItem("lastDestination", JSON.stringify(newDest));
-    getRoute(origin, newDest);
-  };
 
   return (
     <View style={styles.container}>
-      {/* 🔹 Header */}
-      <View style={styles.header}>
-        <Ionicons name="notifications-outline" size={22} color="#fff" />
-        <Text style={styles.headerTitle}>Selecciona tu destino 🗺️</Text>
-        <Ionicons name="cart-outline" size={22} color="#fff" />
+      {/* 🔹 Barra superior dinámica */}
+      <Header mensaje={status} colorFondo={headerColor} />
+
+      {/* 🔹 Info extra (puedes quitar si no la necesitas) */}
+      <View style={styles.timeBox}>
+        <Text style={styles.timeText}>Tiempo estimado de llegada: 30:00 min</Text>
       </View>
 
-      <View style={styles.statusContainer}>
-        <Text style={styles.statusText}>
-          {destination ? "Ruta generada ✔️" : "Toca el mapa para seleccionar destino"}
-        </Text>
-      </View>
-
-      {/* 🔹 Mapa */}
+      {/* 🔹 Mapa con ruta */}
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: origin.latitude,
-          longitude: origin.longitude,
+          latitude: -17.7845,
+          longitude: -63.1805,
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
-        onPress={handleMapPress}
       >
-        {/* 📍 Origen fijo */}
-        <Marker coordinate={origin} title="Restaurante (Origen)" pinColor="green" />
+        {/* 📍 Origen */}
+        <Marker coordinate={origin} title="Restaurante" pinColor="green" />
 
-        {/* 🎯 Destino seleccionado */}
-        {destination && <Marker coordinate={destination} title="Tu destino" pinColor="red" />}
+        {/* 🎯 Destino */}
+        <Marker coordinate={destination} title="Cliente" pinColor="red" />
 
-        {/* 🛣️ Ruta calculada */}
-        {routeCoords.length > 0 && (
-          <Polyline coordinates={routeCoords} strokeWidth={4} strokeColor="#1E6F73" />
-        )}
+        {/* 🛣️ Ruta */}
+        <Polyline coordinates={routeCoords} strokeWidth={5} strokeColor="#1E6F73" />
       </MapView>
     </View>
   );
@@ -95,25 +67,15 @@ export default function TrackingScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f5f6f6" },
 
-  header: {
-    backgroundColor: "#1E6F73",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: 40,
-    paddingHorizontal: 15,
-    paddingBottom: 10,
-  },
-  headerTitle: { color: "#fff", fontSize: 14, fontWeight: "600" },
-
-  statusContainer: {
+  timeBox: {
     backgroundColor: "#E5EAF3",
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 8,
   },
-  statusText: {
-    color: "#1E6F73",
+  timeText: {
+    color: "#013A3F",
     fontWeight: "600",
+    fontSize: 13,
   },
 
   map: {

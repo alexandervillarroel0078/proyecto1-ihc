@@ -1,6 +1,14 @@
 import { useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Home from "../components/home/Home"; // 🔹 reutiliza la barra superior
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import Header from "../components/home/Header";
 import { useUser } from "../navigation/context/UserContext";
 
 export default function CheckoutScreen({ navigation }) {
@@ -8,32 +16,41 @@ export default function CheckoutScreen({ navigation }) {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [coupon, setCoupon] = useState("");
 
+  // 📍 Estado inicial del mapa (Plaza 24 de Septiembre, Santa Cruz)
+  const [region, setRegion] = useState({
+    latitude: -17.7833,
+    longitude: -63.1821,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  });
+
+  const [marker, setMarker] = useState({
+    latitude: -17.7833,
+    longitude: -63.1821,
+  });
+
+  // 🧮 Cálculos del pedido
   const subtotal = 950.0;
   const envio = 50.99;
   const descuento = 0.0;
   const impuestos = 0.0;
   const total = subtotal - descuento + envio + impuestos;
 
+  // 🟢 Acción al presionar “pagar”
   const handlePagar = () => {
-    navigation.navigate("Ubicación"); // luego irá a PaymentScreen
+    navigation.navigate("Pago", {
+      pedidoId: 123,
+      cliente: user?.nombre ?? "Invitado",
+      monto: total ?? 50.0,
+    });
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      {/* 🔹 Barra superior reutilizada */}
-      <Home
-        nombre={user?.nombre || "Usuario"}
-        categorias={[]}
-        productos={[]}
-        showOnlyHeader={true}
-      />
+      {/* 🔹 Barra superior */}
+      <Header mensaje="Tiempo restante 05:00 min" colorFondo="#FF6B6B" />
 
       <ScrollView style={{ flex: 1, padding: 15 }} showsVerticalScrollIndicator={false}>
-        {/* 🔸 Temporizador */}
-        <View style={styles.timerBox}>
-          <Text style={styles.timerText}>tiempo restante 05:00 min</Text>
-        </View>
-
         {/* 🔸 Métodos de pago */}
         <Text style={styles.sectionTitle}>MÉTODOS DE PAGO</Text>
         <View style={styles.paymentMethods}>
@@ -54,10 +71,22 @@ export default function CheckoutScreen({ navigation }) {
         {/* 🔸 Resumen de compra */}
         <View style={styles.summaryBox}>
           <Text style={styles.summaryTitle}>📦 RESUMEN DE COMPRA</Text>
-          <View style={styles.row}><Text>Subtotal</Text><Text>Bs. {subtotal.toFixed(2)}</Text></View>
-          <View style={styles.row}><Text>Descuento</Text><Text>Bs. {descuento.toFixed(2)}</Text></View>
-          <View style={styles.row}><Text>Envío</Text><Text>Bs. {envio.toFixed(2)}</Text></View>
-          <View style={styles.row}><Text>Impuestos</Text><Text>Bs. {impuestos.toFixed(2)}</Text></View>
+          <View style={styles.row}>
+            <Text>Subtotal</Text>
+            <Text>Bs. {subtotal.toFixed(2)}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text>Descuento</Text>
+            <Text>Bs. {descuento.toFixed(2)}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text>Envío</Text>
+            <Text>Bs. {envio.toFixed(2)}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text>Impuestos</Text>
+            <Text>Bs. {impuestos.toFixed(2)}</Text>
+          </View>
           <View style={styles.separator} />
           <View style={[styles.row, { marginTop: 4 }]}>
             <Text style={{ fontWeight: "bold" }}>Total</Text>
@@ -78,18 +107,32 @@ export default function CheckoutScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* 🔸 Dirección */}
+        {/* 🔸 Dirección con mapa interactivo */}
         <View style={styles.addressBox}>
           <Text style={styles.summaryTitle}>📍 DIRECCIÓN DE ENTREGA</Text>
-          <Image
-            source={require("../assets/icons/map_placeholder.png")}
+
+          <MapView
             style={{ width: "100%", height: 140, borderRadius: 10, marginTop: 8 }}
-            resizeMode="cover"
-          />
+            region={region}
+            onRegionChangeComplete={(reg) => setRegion(reg)}
+            showsUserLocation={true}
+            showsCompass={false}
+            showsScale={false}
+          >
+            <Marker
+              coordinate={marker}
+              draggable
+              onDragEnd={(e) => setMarker(e.nativeEvent.coordinate)}
+              title="Tu ubicación"
+              description="Puedes mover el marcador"
+            />
+          </MapView>
+
           <View style={{ marginTop: 10 }}>
             <Text>Fecha prevista: 06 de Octubre de 2025</Text>
             <Text>Hora estimada: 18:30 - 19:00</Text>
           </View>
+
           <TouchableOpacity style={styles.addSpecBtn}>
             <Text style={styles.addSpecText}>agregar especificaciones</Text>
           </TouchableOpacity>
@@ -121,14 +164,6 @@ export default function CheckoutScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  timerBox: {
-    backgroundColor: "#C93B3B",
-    borderRadius: 5,
-    paddingVertical: 6,
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  timerText: { color: "#fff", fontWeight: "600" },
   sectionTitle: { fontWeight: "bold", color: "#013A3F", marginBottom: 6 },
   paymentMethods: { flexDirection: "row", justifyContent: "space-between", marginBottom: 15 },
   methodCard: {
@@ -211,11 +246,3 @@ const styles = StyleSheet.create({
   },
   payButtonText: { color: "#fff", fontWeight: "bold" },
 });
-{/*
-    navigation.navigate("Pago", {
-  pedidoId: 123,
-  cliente: user?.nombre,
-  monto: total,
-});
-
-    */}
