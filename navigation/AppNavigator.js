@@ -92,6 +92,8 @@ export default function AppNavigator() {
         <Tab.Screen name="Ubicación" component={TrackingScreen} />
         <Tab.Screen name="Pedidos" component={PedidosScreen} />
         <Tab.Screen name="Perfil" component={ProfileScreen} />
+        
       </Tab.Navigator>
   );
 }
+
