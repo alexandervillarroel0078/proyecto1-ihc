@@ -1,6 +1,26 @@
+// components/productos/ProductList.jsx
+import { useNavigation } from "@react-navigation/native";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Toast from "react-native-toast-message"; // ✅ si quieres feedback visual (opcional)
 
-export default function ProductList({ productos }) {
+export default function ProductList({ productos, modo = "home", onAgregar }) {
+  const navigation = useNavigation();
+
+  const handleAgregar = (producto) => {
+    if (modo === "carrito") {
+      onAgregar?.(producto);
+      Toast.show({
+        type: "success",
+        text1: "Producto agregado 🛒",
+        visibilityTime: 1200,
+      });
+    } else {
+      // ✅ navegar directamente al stack raíz con los params
+      navigation.navigate("Carrito", { producto });
+    }
+  };
+
+
   return (
     <View style={styles.container}>
       {/* 🔹 Encabezado de sección */}
@@ -31,14 +51,15 @@ export default function ProductList({ productos }) {
 
             <TouchableOpacity
               style={styles.addBtn}
-              onPress={() => console.log("Agregado al carrito:", p.nombre)}
+              onPress={() => handleAgregar(p)}
             >
-              <Text style={styles.addText}>agregar</Text>
+              <Text style={styles.addText}>
+                {modo === "carrito" ? "Añadir" : "Agregar"}
+              </Text>
             </TouchableOpacity>
           </View>
         ))}
       </ScrollView>
-
     </View>
   );
 }
@@ -47,7 +68,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F7F8F9",
     paddingTop: 10,
-    paddingBottom: 0,
   },
   scroll: {
     backgroundColor: "#F7F8F9",
@@ -63,7 +83,7 @@ const styles = StyleSheet.create({
   sectionTitle: { color: "#1E6F73", fontWeight: "bold", fontSize: 17 },
   sectionLink: { color: "#f28c56", fontSize: 13, fontWeight: "600" },
   productCard: {
-    backgroundColor: "#ffffffff",
+    backgroundColor: "#fff",
     borderRadius: 10,
     paddingVertical: 10,
     alignItems: "center",
@@ -77,10 +97,9 @@ const styles = StyleSheet.create({
   productImg: {
     width: 110,
     height: 110,
-    resizeMode: "contain", // mantiene proporción sin deformar
+    resizeMode: "contain",
     marginBottom: 4,
   },
-
   productName: {
     fontWeight: "bold",
     marginTop: 6,
@@ -98,7 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1E6F73",
     borderRadius: 6,
     paddingVertical: 6,
-    width: "100%", // 🔹 ocupa todo el ancho del card
+    width: "100%",
     alignItems: "center",
   },
   addText: {
@@ -107,7 +126,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textTransform: "uppercase",
   },
-
   badge: {
     position: "absolute",
     top: 4,

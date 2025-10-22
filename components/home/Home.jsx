@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet, View } from "react-native";
+import ProductList from "../productos/ProductList"; // ✅ CORRECTO
 import Banner from "./Banner";
 import CategoryList from "./CategoryList";
 import Header from "./Header";
-import ProductList from "./ProductList";
 import SearchBar from "./SearchBar";
 
 export default function Home({
@@ -10,11 +10,10 @@ export default function Home({
   categorias,
   productos,
   onLocationPress,
-  onPedidosPress, // ✅ agregamos esta prop
+  onPedidosPress,
 }) {
   return (
     <View style={styles.container}>
-      {/* 🔹 Contenido desplazable */}
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
         <Header nombre={nombre} />
         <SearchBar />
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
-    paddingBottom: 80, // deja espacio para la navbar
+    paddingBottom: 80,
   },
   btnPedidos: {
     backgroundColor: "#1E6F73",

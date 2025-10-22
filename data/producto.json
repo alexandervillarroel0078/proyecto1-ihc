@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "nombre": "Ace",
+        "precio": 25.5
+    },
+    {
+        "id": 2,
+        "nombre": "Leche",
+        "precio": 10.99
+    },
+    {
+        "id": 3,
+        "nombre": "Manzanilla",
+        "precio": 15.5
+    },
+    {
+        "id": 4,
+        "nombre": "Mermelada",
+        "precio": 49.99
+    },
+    {
+        "id": 5,
+        "nombre": "Pollo",
+        "precio": 29.99
+    },
+    {
+        "id": 6,
+        "nombre": "Queso",
+        "precio": 199.99
+    }
+]

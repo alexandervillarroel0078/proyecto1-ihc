@@ -1,18 +1,97 @@
-src/
- ├── screens/
- │   └── HomeScreen.js       ← Pantalla que orquesta todo
- └── components/
-     └── home/
-         ├── Home.jsx        ← Componente principal (vista completa del Home)
-         ├── Header.jsx      ← Encabezado con saludo e íconos
-         ├── SearchBar.jsx   ← Barra de búsqueda
-         ├── CategoryList.jsx← Muestra las categorías (Bebidas, Carnes, etc.)
-         ├── ProductList.jsx ← Lista de productos recomendados
-         └── Navbar.jsx      ← Barra inferior de navegación
-components/
- ├── pedidos/
- │    ├── FiltrosPedidos.jsx          ← los botones tipo chip (descuentos, rango de precio, etc.)
- │    ├── PedidoCard.jsx              ← cada tarjeta individual con “Pedido #1”, “Repetir”, “Eliminar”
- │    ├── EmptyCart.jsx               ← ícono de carrito vacío (vista cuando no hay pedidos)
- │    ├── PedidosHeader.jsx           ← encabezado superior “PIDE” + barra superior (opcional)
- │    └── PedidosList.jsx             ← lista completa que renderiza todas las tarjetas PedidoCard
+1ERPROYECTO/
+├── assets/
+│   ├── banner/
+│   │   ├── baner1.jpg
+│   │   ├── baner2.png
+│   │   ├── baner3.jpg
+│   │   └── baner4.png
+│   │
+│   ├── icons/
+│   │   ├── bebidas.png
+│   │   ├── carnes.png
+│   │   ├── lacteos.png
+│   │   └── verduras.png
+│   │
+│   └── productos/
+│       ├── ace.png
+│       ├── leche.png
+│       ├── mansanilla.png
+│       ├── mermelada.png
+│       ├── pollo.png
+│       └── queso.png
+│
+├── components/
+│   ├── carrito/
+│   │   ├── CarritoItem.jsx
+│   │   ├── CarritoResumen.jsx
+│   │   ├── CarritoVacio.jsx 
+│   │
+│   ├── home/
+│   │   ├── Banner.jsx
+│   │   ├── CategoryList.jsx
+│   │   ├── Header.jsx
+│   │   ├── Home.jsx
+│   │   ├── ProductList.jsx
+│   │   ├── SearchBar.jsx 
+│   │
+│   ├── pedidos/
+│   │   ├── EmptyCart.jsx
+│   │   ├── FiltrosPedidos.jsx
+│   │   ├── PedidoCard.jsx
+│   │   ├── PedidosHeader.jsx
+│   │   └── PedidosList.jsx
+│   │
+ 
+ 
+│
+├── data/
+│   ├── pedidos.json
+│   ├── users.json
+ 
+│
+├── navigation/
+│   ├── AppNavigator.js
+│   ├── BottomTabs.js
+
+├──context/
+│   ├── UserContext.js
+
+├── screens/
+│   ├── CartScreen.js
+│   ├── CheckoutScreen.js
+│   ├── HomeScreen.js
+│   ├── LoginScreen.js
+│   ├── OrdersScreen.js
+│   ├── PaymentScreen.js
+│   ├── PedidosScreen.js
+│   ├── ProfileScreen.js
+│   ├── TrackingScreen.js
+│   └── SplashScreen.js
+│
+├── services/
+│   ├── api.js
+│   ├── authService.js
+│   ├── pedidosService.js
+│   └── productosService.js
+│
+├── styles/
+│   ├── colors.js
+│   ├── fonts.js
+│   └── globalStyles.js
+│
+├── utils/
+│   ├── formatDate.js
+│   ├── currencyFormatter.js
+│   └── storageHelper.js
+│
+├── App.js
+├── app.json
+├── package.json
+├── package-lock.json
+├── README.md
+├── .gitignore
+├── tsconfig.json
+├── eslint.config.js
+├── expo-env.d.ts
+├── zarquitectura.txt
+└── zconsultas.txt
