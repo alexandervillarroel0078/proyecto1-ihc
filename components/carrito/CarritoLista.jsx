@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 10,
     marginBottom: 15,
+    
     backgroundColor: "#fff",
   },
   scroll: {

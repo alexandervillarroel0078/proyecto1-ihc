@@ -7,9 +7,8 @@ import { StyleSheet, View } from "react-native";
 import CarritoLista from "../components/carrito/CarritoLista";
 import CarritoResumen from "../components/carrito/CarritoResumen";
 import ProductList from "../components/productos/ProductList";
-import productosData from "../data/producto.json"; // ✅ RUTA CORRECTA según tu estructura
+import productosData from "../data/producto.json";
 
-// 🔹 Mapa de imágenes (React Native no permite require dinámico en JSON)
 const imageMap = {
   Ace: require("../assets/productos/ace.png"),
   Leche: require("../assets/productos/leche.png"),
@@ -23,8 +22,9 @@ export default function CarritoScreen() {
   const route = useRoute();
   const [carrito, setCarrito] = useState([]);
   const [productos, setProductos] = useState([]);
+  const [carritoCargado, setCarritoCargado] = useState(false);
 
-  // 🔹 Cargar productos desde JSON y asignar imagen correspondiente
+  // 🔹 Cargar productos
   useEffect(() => {
     const dataConImagen = productosData.map((p) => ({
       ...p,
@@ -33,14 +33,19 @@ export default function CarritoScreen() {
     setProductos(dataConImagen);
   }, []);
 
-  // 🔹 Cargar carrito guardado
+  // 🔹 Cargar carrito
   useEffect(() => {
     const cargarCarrito = async () => {
       try {
         const data = await AsyncStorage.getItem("carrito");
-        if (data) setCarrito(JSON.parse(data));
-      } catch (error) {
-        console.error("Error al cargar carrito:", error);
+        if (data) {
+          setCarrito(JSON.parse(data));
+          console.log("📦 Carrito cargado:", JSON.parse(data));
+        } else console.log("⚠️ Sin carrito previo");
+      } catch (err) {
+        console.error("Error al cargar carrito:", err);
+      } finally {
+        setCarritoCargado(true);
       }
     };
     cargarCarrito();
@@ -48,36 +53,55 @@ export default function CarritoScreen() {
 
   // 🔹 Guardar carrito cuando cambie
   useEffect(() => {
-    AsyncStorage.setItem("carrito", JSON.stringify(carrito));
+    if (carritoCargado) {
+      AsyncStorage.setItem("carrito", JSON.stringify(carrito));
+      console.log("💾 Guardado en AsyncStorage:", carrito);
+    }
   }, [carrito]);
 
-  // 🔹 Agregar producto
-  const agregarProducto = (p) =>
-    setCarrito((prev) => [...prev, { ...p, id: Date.now() }]);
+  // 🛒 Agregar o aumentar producto existente
+  const agregarProducto = (p) => {
+    console.log("🛒 Intentando agregar:", p);
 
-  // 🔹 Eliminar producto
-  const eliminarProducto = (id) =>
-    setCarrito((prev) => prev.filter((p) => p.id !== id));
+    setCarrito((prev) => {
+      // Verificar si ya existe
+      const existente = prev.find((item) => item.nombre === p.nombre);
 
-  // 🔹 Agregar desde Home (si viene por route.params)
-  useEffect(() => {
-    if (route.params?.producto) {
-      const nuevo = route.params.producto;
-      if (!carrito.find((p) => p.nombre === nuevo.nombre)) {
-        agregarProducto(nuevo);
+      if (existente) {
+        // Si existe, aumentar cantidad
+        console.log("🔁 Producto ya existe, aumentando cantidad...");
+        return prev.map((item) =>
+          item.nombre === p.nombre
+            ? { ...item, cantidad: (item.cantidad || 1) + 1 }
+            : item
+        );
+      } else {
+        // Si no existe, agregar con cantidad = 1
+        console.log("🆕 Nuevo producto agregado.");
+        return [...prev, { ...p, id: Date.now(), cantidad: 1 }];
       }
+    });
+  };
+
+  // 🗑️ Eliminar producto
+  const eliminarProducto = (id) => {
+    setCarrito((prev) => prev.filter((p) => p.id !== id));
+  };
+
+  // 🚀 Agregar directo desde Home (solo si el carrito ya está cargado)
+  useEffect(() => {
+    if (carritoCargado && route.params?.producto && route.params?.agregarDirecto) {
+      const nuevo = route.params.producto;
+      agregarProducto(nuevo);
+      route.params.agregarDirecto = false;
     }
-  }, [route.params]);
+  }, [route.params, carritoCargado]);
 
   return (
     <View style={styles.container}>
       <CarritoLista productos={carrito} onEliminar={eliminarProducto} />
       <CarritoResumen productos={carrito} />
-      <ProductList
-        productos={productos}
-        modo="carrito"
-        onAgregar={agregarProducto}
-      />
+      <ProductList productos={productos} modo="carrito" onAgregar={agregarProducto} />
     </View>
   );
 }
@@ -87,6 +111,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F7F8F9",
     paddingVertical: 10,
-    paddingBottom: 80, // 🔹 espacio para el resumen o botón fijo
+    paddingBottom: 80,
   },
 });

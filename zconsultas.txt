@@ -2,3 +2,14 @@ web
 npx expo start -c
 mobil
 npx expo start --tunnel
+
+
+
+
+
+
+
+
+
+CarritoScreen  ──►  ConfirmarPedidoScreen  ──►  PaymentProcessingScreen  ──►  PaymentSuccessScreen  ──►  Main(Ubicación)
+   (revisas)            (confirmas y defines)         (procesando pago)          (pago exitoso + QR)          (retorno al inicio)

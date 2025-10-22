@@ -4,7 +4,9 @@ import { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function CarritoItem({ producto, onEliminar }) {
-  const [cantidad, setCantidad] = useState(1);
+  // const [cantidad, setCantidad] = useState(1);
+// dentro del componente CarritoItem
+const [cantidad, setCantidad] = useState(producto.cantidad || 1);
 
   const incrementar = () => setCantidad((c) => c + 1);
   const decrementar = () => setCantidad((c) => (c > 1 ? c - 1 : 1));

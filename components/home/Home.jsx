@@ -1,9 +1,13 @@
+// components/home/Home.jsx
 import { ScrollView, StyleSheet, View } from "react-native";
-import ProductList from "../productos/ProductList"; // ✅ CORRECTO
+import ProductList from "../productos/ProductList";
 import Banner from "./Banner";
 import CategoryList from "./CategoryList";
-import Header from "./Header";
 import SearchBar from "./SearchBar";
+
+// 👇 Cambia esta línea
+// import Header from "./Header";
+import Header from "../common/Header"; // ✅ Header global y reutilizable
 
 export default function Home({
   nombre,
@@ -15,18 +19,27 @@ export default function Home({
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
-        <Header nombre={nombre} />
+        {/* 🔹 Header global */}
+        <Header nombre={nombre} showCart showBell />
+
+        {/* 🔹 Barra de búsqueda */}
         <SearchBar />
+
+        {/* 🔹 Banner de promociones */}
         <Banner />
+
+        {/* 🔹 Lista de categorías */}
         <CategoryList categorias={categorias} />
-        <ProductList productos={productos} />
+
+        {/* 🔹 Productos recomendados */}
+        <ProductList productos={productos} modo="home" />
       </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+ container: {
     flex: 1,
     backgroundColor: "#f9fafb",
   },
@@ -54,3 +67,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+ 

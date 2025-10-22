@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
-import Header from "../components/home/Header"; // ✅ reutilizado
+import Header from "../components/common/Header";
 
 export default function TrackingScreen() {
   // 📍 Coordenadas fijas (simulación)

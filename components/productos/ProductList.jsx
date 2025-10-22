@@ -6,19 +6,22 @@ import Toast from "react-native-toast-message"; // ✅ si quieres feedback visua
 export default function ProductList({ productos, modo = "home", onAgregar }) {
   const navigation = useNavigation();
 
-  const handleAgregar = (producto) => {
-    if (modo === "carrito") {
-      onAgregar?.(producto);
-      Toast.show({
-        type: "success",
-        text1: "Producto agregado 🛒",
-        visibilityTime: 1200,
-      });
-    } else {
-      // ✅ navegar directamente al stack raíz con los params
-      navigation.navigate("Carrito", { producto });
-    }
-  };
+const handleAgregar = (producto) => {
+  if (modo === "carrito") {
+    onAgregar?.(producto);
+    Toast.show({
+      type: "success",
+      text1: "Producto agregado 🛒",
+      visibilityTime: 1200,
+    });
+  } else {
+    console.log("🟢 Producto enviado a Carrito:", producto);
+    // navigation.getParent()?.navigate("Carrito", { producto, agregarDirecto: true });
+    navigation.navigate("Carrito", { producto, agregarDirecto: true });
+
+  }
+};
+
 
 
   return (
