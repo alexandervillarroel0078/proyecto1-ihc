@@ -15,6 +15,7 @@ export default function RutaScreen() {
     { latitude: -17.786, longitude: -63.1775 },
     destination,
   ];
+  const mapRef = useRef(null);
 
   // 🕓 Estado del pedido
   const [status, setStatus] = useState("🧑‍🍳 Preparando tu pedido...");
@@ -40,8 +41,8 @@ export default function RutaScreen() {
   const neonColors = status.includes("Preparando")
     ? ["#FFD700", "#FF8C00"]
     : status.includes("En camino")
-    ? ["#00FFFF", "#00FF99"]
-    : ["#2196F3", "#8A2BE2"];
+      ? ["#00FFFF", "#00FF99"]
+      : ["#2196F3", "#8A2BE2"];
 
   // 🔁 Reiniciar simulación
   const resetSimulation = () => {
@@ -84,6 +85,18 @@ export default function RutaScreen() {
       clearInterval(interval);
     };
   }, [isRunning]);
+  useEffect(() => {
+    if (!mapRef.current) return;
+    mapRef.current.animateToRegion(
+      {
+        latitude: position.latitude,
+        longitude: position.longitude,
+        latitudeDelta: 0.01, // 🔹 zoom más cercano
+        longitudeDelta: 0.01,
+      },
+      1000 // duración de la animación (ms)
+    );
+  }, [position]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
@@ -101,7 +114,7 @@ export default function RutaScreen() {
 
       {/* 🔹 Texto de estado y tiempo */}
       <View style={styles.infoBox}>
-  
+
         <Text style={styles.timeText}>
           ⏱ Tiempo estimado: {minutes}:{seconds.toString().padStart(2, "0")} min
         </Text>
@@ -110,7 +123,7 @@ export default function RutaScreen() {
       {/* 🗺️ Mapa con efecto neón */}
       <View style={styles.mapWrapper}>
         <MapView
-        
+          ref={mapRef}
           style={styles.map}
           initialRegion={{
             latitude: -17.7845,
@@ -211,31 +224,31 @@ const styles = StyleSheet.create({
   },
   mapWrapper: {
     flex: 1,
-     
+
     borderRadius: 0,
     overflow: "hidden",
     position: "relative",
   },
   map: {
-  flex: 1,
-  width: "100%",
-  height: "100%",
-  filter: "saturate(1.2) brightness(1.1)", // mejora el color (en web)
-},
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    filter: "saturate(1.2) brightness(1.1)", // mejora el color (en web)
+  },
 
   borderOverlay: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 10,
   },
   borderLine: {
-  position: "absolute",
-  height: 4,
-  width: "100%",
-  shadowColor: "#00FFFF",
-  shadowOpacity: 0.8,
-  shadowRadius: 12,
-  opacity: 0.9,
-},
+    position: "absolute",
+    height: 4,
+    width: "100%",
+    shadowColor: "#00FFFF",
+    shadowOpacity: 0.8,
+    shadowRadius: 12,
+    opacity: 0.9,
+  },
 
   gradient: {
     flex: 1,
