@@ -89,12 +89,26 @@ export default function PaymentSuccessScreen({ route, navigation }) {
             <Text style={styles.buttonText}>compartir</Text>
           </TouchableOpacity>
         </View>
+
+        
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: "#F7B48A", marginTop: 30 }]}
-          onPress={() => navigation.navigate("Main")}
+          style={[styles.button, { backgroundColor: "#1E6F73", marginTop: 30 }]}
+          onPress={() =>
+            navigation.navigate("Main", {
+              screen: "Tabs",
+              params: {
+                screen: "Ubicación",
+              },
+            })
+          }
         >
-          <Text style={[styles.buttonText, { color: "#013A3F" }]}>Seguir comprando</Text>
+          <Text style={[styles.buttonText, { color: "#fff" }]}>
+            Ver seguimiento del pedido
+          </Text>
         </TouchableOpacity>
+
+
+
 
       </View>
     </View>
