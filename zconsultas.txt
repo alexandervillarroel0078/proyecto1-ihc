@@ -4,12 +4,47 @@ mobil
 npx expo start --tunnel
 
 
-
-
-
+git add .
+git commit -m "ultimas mejoras"
+git push origin alexander
 
 
 
 
 CarritoScreen  ──►  ConfirmarPedidoScreen  ──►  PaymentProcessingScreen  ──►  PaymentSuccessScreen  ──►  Main(Ubicación)
    (revisas)            (confirmas y defines)         (procesando pago)          (pago exitoso + QR)          (retorno al inicio)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 1️⃣ Eliminar lo que queda por si están ocultas
+rd -r -fo node_modules
+rd -r -fo .expo
+rd -r -fo .expo-shared
+del package-lock.json
+
+# 2️⃣ Instalar de nuevo todo limpio
+npm install
+
+# 3️⃣ Instalar dependencias base de Expo (compatibles con SDK 54)
+npx expo install expo @expo/vector-icons expo-router expo-constants expo-image expo-system-ui react-native
+
+# 4️⃣ Iniciar limpio
+npx expo start -c

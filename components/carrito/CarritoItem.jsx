@@ -1,24 +1,25 @@
 // components/carrito/CarritoItem.jsx
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function CarritoItem({ producto, onEliminar }) {
-  // const [cantidad, setCantidad] = useState(1);
-// dentro del componente CarritoItem
-const [cantidad, setCantidad] = useState(producto.cantidad || 1);
+  const [cantidad, setCantidad] = useState(producto.cantidad || 1);
+
+  // 🔄 Sincroniza cantidad si cambia desde el estado global
+  useEffect(() => {
+    setCantidad(producto.cantidad || 1);
+  }, [producto.cantidad]);
 
   const incrementar = () => setCantidad((c) => c + 1);
   const decrementar = () => setCantidad((c) => (c > 1 ? c - 1 : 1));
 
-  // ✅ Convertir el precio a número para evitar errores
   const precioUnitario = Number(producto.precio) || 0;
   const total = (precioUnitario * cantidad).toFixed(2);
 
   return (
     <View style={styles.item}>
       <Image source={producto.img} style={styles.img} />
-
       <View style={styles.info}>
         <Text style={styles.nombre}>{producto.nombre}</Text>
         <Text style={styles.precio}>
@@ -29,19 +30,15 @@ const [cantidad, setCantidad] = useState(producto.cantidad || 1);
 
       <View style={styles.controls}>
         <Text style={styles.label}>Cantidad</Text>
-
         <View style={styles.qtyBox}>
           <TouchableOpacity style={styles.qtyBtn} onPress={decrementar}>
             <Ionicons name="remove" size={16} color="#1E6F73" />
           </TouchableOpacity>
-
           <Text style={styles.qtyText}>{cantidad}</Text>
-
           <TouchableOpacity style={styles.qtyBtn} onPress={incrementar}>
             <Ionicons name="add" size={16} color="#1E6F73" />
           </TouchableOpacity>
         </View>
-
         <TouchableOpacity onPress={onEliminar}>
           <Ionicons name="trash-outline" size={22} color="#F28C56" />
         </TouchableOpacity>

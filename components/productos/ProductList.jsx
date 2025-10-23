@@ -2,7 +2,6 @@
 import { useNavigation } from "@react-navigation/native";
 import {
   Image,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,8 +13,9 @@ import Toast from "react-native-toast-message";
 export default function ProductList({ productos, modo = "home", onAgregar }) {
   const navigation = useNavigation();
 
-  const handleAgregar = (producto) => {
+  const handleAgregar = async (producto) => {
     if (modo === "carrito") {
+      // 🔹 Si está dentro del carrito
       onAgregar?.(producto);
       Toast.show({
         type: "success",
@@ -23,7 +23,19 @@ export default function ProductList({ productos, modo = "home", onAgregar }) {
         visibilityTime: 1200,
       });
     } else {
-      navigation.navigate("Carrito", { producto, agregarDirecto: true });
+      // 🔹 Si está en Home u otra vista
+      // await addToCart(producto);
+      Toast.show({
+        type: "success",
+        text1: `${producto.nombre} agregado al carrito 🛒`,
+        visibilityTime: 1200,
+      });
+
+      // 🔹 Navegar al carrito con los datos actualizados
+      navigation.navigate("Carrito", {
+        producto,
+        agregarDirecto: true,
+      });
     }
   };
 
@@ -32,16 +44,7 @@ export default function ProductList({ productos, modo = "home", onAgregar }) {
       {/* 🔹 Encabezado */}
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Recomendados</Text>
-        <TouchableOpacity
-          onPress={() => console.log("Ver más productos")}
-          style={styles.sectionLinkWrapper}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.sectionLink}>ver más</Text>
-          <View style={styles.sectionLinkLine} />
-        </TouchableOpacity>
-
-
+        <Text style={styles.sectionLink}>ver más</Text>
       </View>
 
       {/* 🔹 Lista horizontal */}
@@ -51,13 +54,7 @@ export default function ProductList({ productos, modo = "home", onAgregar }) {
         style={styles.scroll}
       >
         {productos.map((p, i) => (
-          <Pressable
-            key={i}
-            style={({ pressed }) => [
-              styles.productCard,
-              pressed && styles.cardPressed, // efecto flotante
-            ]}
-          >
+          <View key={i} style={styles.productCard}>
             <TouchableOpacity onPress={() => console.log("Detalle de:", p.nombre)}>
               <Image source={p.img} style={styles.productImg} />
               {p.nuevo && (
@@ -70,15 +67,12 @@ export default function ProductList({ productos, modo = "home", onAgregar }) {
             <Text style={styles.productName}>{p.nombre}</Text>
             <Text style={styles.productPrice}>Bs. {p.precio}</Text>
 
-            <TouchableOpacity
-              style={styles.addBtn}
-              onPress={() => handleAgregar(p)}
-            >
+            <TouchableOpacity style={styles.addBtn} onPress={() => handleAgregar(p)}>
               <Text style={styles.addText}>
                 {modo === "carrito" ? "Añadir" : "Agregar"}
               </Text>
             </TouchableOpacity>
-          </Pressable>
+          </View>
         ))}
       </ScrollView>
     </View>
@@ -86,24 +80,6 @@ export default function ProductList({ productos, modo = "home", onAgregar }) {
 }
 
 const styles = StyleSheet.create({
-  sectionLinkWrapper: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  sectionLink: {
-    color: "#f28c56",
-    fontSize: 13,
-    fontWeight: "600",
-    textTransform: "lowercase",
-  },
-  sectionLinkLine: {
-    marginTop: 0.0001,
-    width: "90%", // ancho relativo al texto
-    height: 1.2,
-    backgroundColor: "#f28c56",
-    borderRadius: 2,
-  },
-
   container: {
     backgroundColor: "#F7F8F9",
     paddingTop: 10,
@@ -130,18 +106,8 @@ const styles = StyleSheet.create({
     width: 130,
     height: 220,
     borderWidth: 1,
-    borderColor: "#E0DDDD",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    borderColor: "#E6E6E6",
     shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  cardPressed: {
-    transform: [{ scale: 0.96 }],
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 5,
   },
   productImg: {
     width: 110,
