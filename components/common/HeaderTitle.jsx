@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 
 export default function HeaderTitle({ nombre, mensaje }) {
+
+
   const texto = mensaje ? mensaje : `¡Hola ${nombre || "Usuario"}! 👋`;
 
   return (

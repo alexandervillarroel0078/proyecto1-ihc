@@ -9,7 +9,13 @@
   {
     "id": 2,
     "correo": "pepe@gmail.com",
-    "password": "1234",
+    "password": "5678",
     "nombre": "Pepe"
+  },
+  {
+    "id": 3,
+    "correo": "juan@gmail.com",
+    "password": "5678",
+    "nombre": "Juan"
   }
 ]

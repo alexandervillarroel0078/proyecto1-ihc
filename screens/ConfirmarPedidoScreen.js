@@ -21,7 +21,7 @@ export default function ConfirmarPedidoScreen({ navigation }) {
   const { user } = useUser();
 
   // 🧾 Datos que llegan desde el carrito
-  const { productos = [], total = 0 } = route.params || {};
+  const { productos = [] } = route.params || {};
 
   // ⚙️ Estados locales
   const [termsAccepted, setTermsAccepted] = useState(false);

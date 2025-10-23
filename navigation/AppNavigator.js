@@ -37,7 +37,7 @@ function BottomTabs() {
             label = "Home";
           } else if (route.name === "Ubicación") {
             iconName = focused ? "locate" : "locate-outline";
-            label = "ruta";
+            label = "Ruta";
           } else if (route.name === "Pedidos") {
             iconName = focused ? "list" : "list-outline";
             label = "Pedidos";

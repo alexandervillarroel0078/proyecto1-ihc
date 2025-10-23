@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import Header from "../components/common/Header";
+import { useUser } from "../navigation/context/UserContext";
 
 export default function RutaScreen() {
+  const { user } = useUser();
   const origin = { latitude: -17.7833, longitude: -63.1821 };
   const destination = { latitude: -17.7868, longitude: -63.1765 };
   const routeCoords = [
@@ -110,7 +112,7 @@ export default function RutaScreen() {
   return (
     <View style={styles.screen}>
       {/* 🟩 Header igual que en todas las pantallas */}
-      <Header showCart={true} showBell={true} />
+      <Header showCart={true} showBell={true} nombre={user.nombre} />
 
       {/* 🔹 Texto de estado y tiempo */}
       <View style={styles.infoBox}>
