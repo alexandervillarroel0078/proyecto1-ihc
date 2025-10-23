@@ -13,8 +13,6 @@ export default function Home({
   nombre,
   categorias,
   productos,
-  onLocationPress,
-  onPedidosPress,
 }) {
   return (
     <View style={styles.container}>
@@ -39,7 +37,7 @@ export default function Home({
 }
 
 const styles = StyleSheet.create({
- container: {
+  container: {
     flex: 1,
     backgroundColor: "#f9fafb",
   },
@@ -67,4 +65,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
- 

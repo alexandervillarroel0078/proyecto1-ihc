@@ -9,7 +9,7 @@ import { Text, View } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import MisPedidosScreen from "../screens/MisPedidosScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import TrackingScreen from "../screens/TrackingScreen";
+import RutaScreen from "../screens/RutaScreen";
 // 🟧 Pantalla adicional (fuera del tab)
 import CarritoScreen from "../screens/CarritoScreen";
 
@@ -37,10 +37,10 @@ function BottomTabs() {
             label = "Home";
           } else if (route.name === "Ubicación") {
             iconName = focused ? "locate" : "locate-outline";
-            label = "Ubicación";
+            label = "ruta";
           } else if (route.name === "Pedidos") {
             iconName = focused ? "list" : "list-outline";
-            label = "Mis Pedidos";
+            label = "Pedidos";
           } else if (route.name === "Perfil") {
             iconName = focused ? "person" : "person-outline";
             label = "Perfil";
@@ -89,7 +89,7 @@ function BottomTabs() {
       })}
     >
       <Tab.Screen name="Inicio" component={HomeScreen} />
-      <Tab.Screen name="Ubicación" component={TrackingScreen} />
+      <Tab.Screen name="Ubicación" component={RutaScreen} />
       <Tab.Screen name="Pedidos" component={MisPedidosScreen} />
       <Tab.Screen name="Perfil" component={ProfileScreen} />
     </Tab.Navigator>

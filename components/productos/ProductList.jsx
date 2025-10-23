@@ -1,45 +1,63 @@
 // components/productos/ProductList.jsx
 import { useNavigation } from "@react-navigation/native";
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Toast from "react-native-toast-message"; // ✅ si quieres feedback visual (opcional)
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function ProductList({ productos, modo = "home", onAgregar }) {
   const navigation = useNavigation();
 
-const handleAgregar = (producto) => {
-  if (modo === "carrito") {
-    onAgregar?.(producto);
-    Toast.show({
-      type: "success",
-      text1: "Producto agregado 🛒",
-      visibilityTime: 1200,
-    });
-  } else {
-    console.log("🟢 Producto enviado a Carrito:", producto);
-    // navigation.getParent()?.navigate("Carrito", { producto, agregarDirecto: true });
-    navigation.navigate("Carrito", { producto, agregarDirecto: true });
-
-  }
-};
-
-
+  const handleAgregar = (producto) => {
+    if (modo === "carrito") {
+      onAgregar?.(producto);
+      Toast.show({
+        type: "success",
+        text1: "Producto agregado 🛒",
+        visibilityTime: 1200,
+      });
+    } else {
+      navigation.navigate("Carrito", { producto, agregarDirecto: true });
+    }
+  };
 
   return (
     <View style={styles.container}>
-      {/* 🔹 Encabezado de sección */}
+      {/* 🔹 Encabezado */}
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Recomendados</Text>
-        <Text style={styles.sectionLink}>ver más</Text>
+        <TouchableOpacity
+          onPress={() => console.log("Ver más productos")}
+          style={styles.sectionLinkWrapper}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.sectionLink}>ver más</Text>
+          <View style={styles.sectionLinkLine} />
+        </TouchableOpacity>
+
+
       </View>
 
-      {/* 🔹 Lista horizontal de productos */}
+      {/* 🔹 Lista horizontal */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.scroll}
       >
         {productos.map((p, i) => (
-          <View key={i} style={styles.productCard}>
+          <Pressable
+            key={i}
+            style={({ pressed }) => [
+              styles.productCard,
+              pressed && styles.cardPressed, // efecto flotante
+            ]}
+          >
             <TouchableOpacity onPress={() => console.log("Detalle de:", p.nombre)}>
               <Image source={p.img} style={styles.productImg} />
               {p.nuevo && (
@@ -60,7 +78,7 @@ const handleAgregar = (producto) => {
                 {modo === "carrito" ? "Añadir" : "Agregar"}
               </Text>
             </TouchableOpacity>
-          </View>
+          </Pressable>
         ))}
       </ScrollView>
     </View>
@@ -68,6 +86,24 @@ const handleAgregar = (producto) => {
 }
 
 const styles = StyleSheet.create({
+  sectionLinkWrapper: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sectionLink: {
+    color: "#f28c56",
+    fontSize: 13,
+    fontWeight: "600",
+    textTransform: "lowercase",
+  },
+  sectionLinkLine: {
+    marginTop: 0.0001,
+    width: "90%", // ancho relativo al texto
+    height: 1.2,
+    backgroundColor: "#f28c56",
+    borderRadius: 2,
+  },
+
   container: {
     backgroundColor: "#F7F8F9",
     paddingTop: 10,
@@ -94,8 +130,18 @@ const styles = StyleSheet.create({
     width: 130,
     height: 220,
     borderWidth: 1,
-    borderColor: "#E6E6E6",
+    borderColor: "#E0DDDD",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  cardPressed: {
+    transform: [{ scale: 0.96 }],
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 5,
   },
   productImg: {
     width: 110,
