@@ -41,7 +41,7 @@ export default function PaymentSuccessScreen({ route, navigation }) {
       }
       const uri = await viewShotRef.current.capture();
       const asset = await MediaLibrary.createAssetAsync(uri);
-      await MediaLibrary.createAlbumAsync("PedidosApp", asset, false).catch(() => {});
+      await MediaLibrary.createAlbumAsync("PedidosApp", asset, false).catch(() => { });
       Alert.alert("Descargado", "QR guardado en la galería ✅");
     } catch {
       Alert.alert("Error", "No se pudo descargar el QR.");
@@ -89,6 +89,13 @@ export default function PaymentSuccessScreen({ route, navigation }) {
             <Text style={styles.buttonText}>compartir</Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: "#F7B48A", marginTop: 30 }]}
+          onPress={() => navigation.navigate("Main")}
+        >
+          <Text style={[styles.buttonText, { color: "#013A3F" }]}>Seguir comprando</Text>
+        </TouchableOpacity>
+
       </View>
     </View>
   );

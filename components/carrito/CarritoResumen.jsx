@@ -33,16 +33,28 @@ export default function CarritoResumen({ productos }) {
     console.log("📦 Enviando productos:", productos.map((p) => p.nombre).join(", "));
     console.log("💳 Total a pagar:", total);
 
-    navigation.navigate("ConfirmarPedido", { productos, total });
+    navigation.navigate("ConfirmarPedido", {
+      productos: productos.map(p => ({
+        id: p.id,
+        nombre: p.nombre,
+        precioUnitario: Number(p.precio),
+        cantidad: p.cantidad,
+        subtotal: Number(p.precio) * (p.cantidad || 1),
+      })),
+      total,
+    });
+
   };
 
   return (
     <View style={styles.fixedContainer}>
       <View style={styles.container}>
         <View style={styles.totalBox}>
-          <Text style={styles.label}>Total</Text>
-          <Text style={styles.totalText}>Bs. {total.toFixed(2)}</Text>
+          <Text style={styles.totalInline}>
+            Total: <Text style={styles.totalAmount}>Bs. {total.toFixed(2)}</Text>
+          </Text>
         </View>
+
 
         <TouchableOpacity style={styles.payButton} onPress={handlePagar}>
           <Text style={styles.payText}>Pagar</Text>
@@ -93,18 +105,33 @@ const styles = StyleSheet.create({
   },
   payButton: {
     backgroundColor: "#1E6F73",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 14,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
+    paddingVertical: 10,
+    paddingHorizontal: 28,
+    borderRadius: 12,
+    shadowColor: "#1E6F73",
+    shadowOpacity: 0.25,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 4,
+    elevation: 5,
   },
+
   payText: {
     color: "#fff",
-    fontWeight: "bold",
-    fontSize: 17,
+    fontWeight: "600",
+    fontSize: 15,
     textTransform: "uppercase",
-    letterSpacing: 0.5,
+    letterSpacing: 0.3,
   },
+  totalInline: {
+    fontSize: 17,
+    color: "#000",
+    fontWeight: "600",
+  },
+
+  totalAmount: {
+    fontSize: 18,
+    color: "#000000ff",
+    fontWeight: "bold",
+  },
+
 });

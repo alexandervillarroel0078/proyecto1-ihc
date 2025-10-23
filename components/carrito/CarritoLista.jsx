@@ -32,13 +32,13 @@ export default function CarritoLista({ productos, onEliminar }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 330, // 🔹 cuadro fijo con borde
+    height: 440, // 🔹 cuadro fijo con borde
     borderWidth: 1.5,
     borderColor: "#DADADA",
     borderRadius: 10,
     marginHorizontal: 10,
     marginBottom: 15,
-    
+    marginTop: 40,
     backgroundColor: "#fff",
   },
   scroll: {

@@ -11,8 +11,8 @@ import ConfirmarPedidoScreen from "./screens/ConfirmarPedidoScreen";
 import LoginScreen from "./screens/LoginScreen";
 
 // 🔹 Nuevas pantallas del flujo de pago
-import PaymentProcessingScreen from "./screens/PaymentProcessingScreen";
 import PaymentSuccessScreen from "./screens/PaymentSuccessScreen"; // renombrada desde PaymentScreen
+import ProcessingScreen from "./screens/ProcessingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,7 +30,7 @@ function RootNavigator() {
 
           {/* 🔹 Flujo de compra */}
           <Stack.Screen name="ConfirmarPedido" component={ConfirmarPedidoScreen} />
-          <Stack.Screen name="ProcesandoPago" component={PaymentProcessingScreen} />
+          <Stack.Screen name="ProcesandoPago" component={ProcessingScreen} />
           <Stack.Screen name="PagoExitoso" component={PaymentSuccessScreen} />
         </>
       )}

@@ -96,24 +96,24 @@ export default function CarritoScreen() {
   };
 
   // 🚀 Agregar directo desde Home (evita duplicar)
-useEffect(() => {
-  if (
-    carritoCargado &&
-    route.params?.producto &&
-    route.params?.agregarDirecto
-  ) {
-    const producto = route.params.producto;
+  useEffect(() => {
+    if (
+      carritoCargado &&
+      route.params?.producto &&
+      route.params?.agregarDirecto
+    ) {
+      const producto = route.params.producto;
 
-    console.log("🚀 Recibido producto desde Home:", producto.nombre);
+      console.log("🚀 Recibido producto desde Home:", producto.nombre);
 
-    agregarProducto(producto);
+      agregarProducto(producto);
 
-    // 🧩 Previene doble ejecución inmediata
-    setTimeout(() => {
-      navigation.setParams({ producto: null, agregarDirecto: false });
-    }, 200);
-  }
-}, [carritoCargado]); // ❌ No incluyas route.params aquí
+      // 🧩 Previene doble ejecución inmediata
+      setTimeout(() => {
+        navigation.setParams({ producto: null, agregarDirecto: false });
+      }, 200);
+    }
+  }, [carritoCargado]); // ❌ No incluyas route.params aquí
 
 
   // 👀 Debug general del estado del carrito
