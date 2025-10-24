@@ -58,7 +58,7 @@ export default function ConfirmarPedidoScreen({ navigation }) {
   // 🧠 Render principal
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <HeaderCheckout initialTime={150} /> 
+      <HeaderCheckout initialTime={90} />
 
       <ScrollView
         style={{ flex: 1, padding: 15 }}
@@ -67,16 +67,16 @@ export default function ConfirmarPedidoScreen({ navigation }) {
         {/* 💳 Métodos de pago */}
         <PaymentMethods selected={selectedMethod} onSelect={setSelectedMethod} />
 
-        {/* 📦 Resumen completo con productos */}
+        {/*  Resumen completo con productos */}
         <ResumenCompra productos={productos} />
 
-        {/* 🎟️ Cupones */}
-        <CouponInput value={coupon} onChange={setCoupon} onApply={() => {}} />
+        {/*  Cupones */}
+        <CouponInput value={coupon} onChange={setCoupon} onApply={() => { }} />
 
-        {/* 🏠 Dirección de entrega */}
+        {/*  Dirección de entrega */}
         <DeliveryAddress />
 
-        {/* ✅ Aceptación de términos */}
+        {/* Aceptación de términos */}
         <TermsCheckbox
           checked={termsAccepted}
           onToggle={() => setTermsAccepted(!termsAccepted)}
