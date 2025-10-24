@@ -18,7 +18,7 @@ CarritoScreen  ──►  ConfirmarPedidoScreen  ──►  PaymentProcessingScr
 
 
 
-
+tan y stack diferentes
 
 
 
