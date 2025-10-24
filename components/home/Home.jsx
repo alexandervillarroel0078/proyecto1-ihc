@@ -1,26 +1,36 @@
+// components/home/Home.jsx
 import { ScrollView, StyleSheet, View } from "react-native";
+import ProductList from "../productos/ProductList";
 import Banner from "./Banner";
 import CategoryList from "./CategoryList";
-import Header from "./Header";
-import ProductList from "./ProductList";
 import SearchBar from "./SearchBar";
+
+// 👇 Cambia esta línea
+// import Header from "./Header";
+import Header from "../common/Header"; // ✅ Header global y reutilizable
 
 export default function Home({
   nombre,
   categorias,
   productos,
-  onLocationPress,
-  onPedidosPress, // ✅ agregamos esta prop
 }) {
   return (
     <View style={styles.container}>
-      {/* 🔹 Contenido desplazable */}
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
-        <Header nombre={nombre} />
+        {/* 🔹 Header global */}
+        <Header nombre={nombre} showCart showBell />
+
+        {/* 🔹 Barra de búsqueda */}
         <SearchBar />
+
+        {/* 🔹 Banner de promociones */}
         <Banner />
+
+        {/* 🔹 Lista de categorías */}
         <CategoryList categorias={categorias} />
-        <ProductList productos={productos} />
+
+        {/* 🔹 Productos recomendados */}
+        <ProductList productos={productos} modo="home" />
       </ScrollView>
     </View>
   );
@@ -33,7 +43,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
-    paddingBottom: 80, // deja espacio para la navbar
+    paddingBottom: 80,
   },
   btnPedidos: {
     backgroundColor: "#1E6F73",

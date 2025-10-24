@@ -1,11 +1,18 @@
-
+// App.js
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Toast from "react-native-toast-message";
+
 import AppNavigator from "./navigation/AppNavigator";
 import { UserProvider, useUser } from "./navigation/context/UserContext";
-import CheckoutScreen from "./screens/CheckoutScreen";
+
+// 🔹 Screens
+import ConfirmarPedidoScreen from "./screens/ConfirmarPedidoScreen";
 import LoginScreen from "./screens/LoginScreen";
-import PaymentScreen from "./screens/PaymentScreen";
+
+// 🔹 Nuevas pantallas del flujo de pago
+import PaymentSuccessScreen from "./screens/PaymentSuccessScreen"; // renombrada desde PaymentScreen
+import ProcessingScreen from "./screens/ProcessingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,18 +22,16 @@ function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {!user ? (
-        // Si no hay usuario logueado, mostrar Login
         <Stack.Screen name="Login" component={LoginScreen} />
       ) : (
         <>
-          {/* 🔹 Tabs principales */}
+          {/* 🔹 Navegación principal (tabs o home general) */}
           <Stack.Screen name="Main" component={AppNavigator} />
 
-          {/* 🔹 Pantalla de Checkout fuera de los tabs */}
-          <Stack.Screen name="Checkout" component={CheckoutScreen} />
-
-          {/* 🔹 Pantalla de pago (si no la manejas como tab fija) */}
-          <Stack.Screen name="Pago" component={PaymentScreen} />
+          {/* 🔹 Flujo de compra */}
+          <Stack.Screen name="ConfirmarPedido" component={ConfirmarPedidoScreen} />
+          <Stack.Screen name="ProcesandoPago" component={ProcessingScreen} />
+          <Stack.Screen name="PagoExitoso" component={PaymentSuccessScreen} />
         </>
       )}
     </Stack.Navigator>
@@ -39,7 +44,8 @@ export default function App() {
       <NavigationContainer>
         <RootNavigator />
       </NavigationContainer>
+      {/* 🔹 Toast global visible desde cualquier parte */}
+      <Toast />
     </UserProvider>
   );
 }
-
