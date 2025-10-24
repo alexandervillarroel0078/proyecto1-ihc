@@ -21,7 +21,23 @@ export default function Header({
   const [showNoti, setShowNoti] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current; // 🔹 animador de opacidad
 
-  const onCartPress = () => navigation.navigate("ConfirmarPedido");
+ const onCartPress = () => {
+  // Verificar contexto de navegación
+  const parentNav = navigation.getParent();
+
+  console.log("🧭 Navigation actual:", navigation.getState());
+  console.log("🧭 Parent navigation:", parentNav ? parentNav.getState() : "❌ No hay parent navigator");
+
+  if (parentNav) {
+    console.log("➡️ Navegando vía parentNav hacia: Tabs → Pedidos");
+    parentNav.navigate("Tabs", { screen: "Pedidos" });
+  } else {
+    console.log("➡️ Navegando directamente hacia: Pedidos");
+    navigation.navigate("Pedidos");
+  }
+};
+
+
   const toggleNotifications = () => setShowNoti(!showNoti);
 
   useEffect(() => {

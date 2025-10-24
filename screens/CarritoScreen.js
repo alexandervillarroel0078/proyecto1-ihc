@@ -127,13 +127,15 @@ export default function CarritoScreen() {
   }, [carrito]);
 
   return (
+    
     <View style={styles.container}>
+      
       <CarritoLista
         productos={carrito}
         onEliminar={eliminarProducto}
+        onVaciar={vaciarCarrito}
         onCantidadChange={actualizarCantidad}
-      />
-
+      /> 
       <CarritoResumen productos={carrito} resumen={resumen} />
 
       <ProductList

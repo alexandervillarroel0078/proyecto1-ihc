@@ -48,7 +48,9 @@ export default function CarritoResumen({ productos }) {
 
   return (
     <View style={styles.fixedContainer}>
+      
       <View style={styles.container}>
+        
         <View style={styles.totalBox}>
           <Text style={styles.totalInline}>
             Total: <Text style={styles.totalAmount}>Bs. {total.toFixed(2)}</Text>

@@ -20,30 +20,30 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const { login } = useUser();
 
+   const handleLogin = () => {
+     const user = users.find(
+       (u) => u.correo === correo.trim() && u.password === password.trim()
+     );
+
+     if (user) {
+       login(user);
+     } else {
+       Alert.alert("Error", "Correo o contraseña incorrectos");
+     }
+   };
   // const handleLogin = () => {
   //   const user = users.find(
   //     (u) => u.correo === correo.trim() && u.password === password.trim()
   //   );
 
-  //   if (user) {
-  //     login(user);
+  //   // Si encuentra usuario o si los campos están vacíos, entra igual
+  //   if (user || (correo === "" && password === "")) {
+  //     const usuario = user || { nombre: "Invitado", correo: "invitado@pide.com" };
+  //     login(usuario);
   //   } else {
   //     Alert.alert("Error", "Correo o contraseña incorrectos");
   //   }
   // };
-  const handleLogin = () => {
-    const user = users.find(
-      (u) => u.correo === correo.trim() && u.password === password.trim()
-    );
-
-    // Si encuentra usuario o si los campos están vacíos, entra igual
-    if (user || (correo === "" && password === "")) {
-      const usuario = user || { nombre: "Invitado", correo: "invitado@pide.com" };
-      login(usuario);
-    } else {
-      Alert.alert("Error", "Correo o contraseña incorrectos");
-    }
-  };
   return (
     <View style={styles.container}>
       {/* 🟧 Encabezado */}
